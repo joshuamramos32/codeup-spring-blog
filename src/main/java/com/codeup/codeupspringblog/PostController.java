@@ -17,7 +17,7 @@ public class PostController {
     @GetMapping("/posts/{id}")
     @ResponseBody
     public String postsId(){
-        return "This will be the post page and Id" ;
+        return "This will be the pageto view an idividual post" ;
     }
 
     @GetMapping("/posts/create")
