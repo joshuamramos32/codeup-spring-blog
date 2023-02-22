@@ -11,7 +11,9 @@
 
 <h2>Your results:  <span  th:text="${message}" ></span></h2>
 <h2>The dice you guessed:  <span th:text="${guess}"></span></h2>
-<h2>The roll was:  <span th:text="${diceRoll}"></span></h2>
+<h2>The roll for dice 1 is:  <span th:text="${diceRoll1}"></span></h2>
+<h2>The roll for dice 2 is:  <span th:text="${diceRoll2}"></span></h2>
+<h2>The total for both dice is:  <span th:text="${diceTotal}"></span></h2>
 
 <div th:replace="partials :: footer"></div>
 
