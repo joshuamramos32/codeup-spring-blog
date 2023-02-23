@@ -1,3 +1,7 @@
 body{
-    background-color: peru;
+    background-color: tan;
+    color: black;
+}
+a:link{
+    color: black;
 }
