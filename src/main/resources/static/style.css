@@ -2,6 +2,14 @@ body{
     background-color: tan;
     color: black;
 }
-a:link{
+.navbar{
+    background-color: darkolivegreen;
+}.navbar a:link{
     color: black;
 }
+footer{
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+

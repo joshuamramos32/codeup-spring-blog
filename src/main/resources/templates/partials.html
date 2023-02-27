@@ -7,11 +7,11 @@
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-<th:block th:fragment="navbar">
 <!--  Navbar-->
-  <nav  class=" navbar navbar-light change" style="background-color: darkolivegreen;color: black">
+<th:block th:fragment="navbar">
+  <nav  class=" navbar navbar-light change">
     <div class="container-fluid change">
-      <a class="navbar-brand" href="#">My Blog</a>
+      <a class="navbar-brand" href="/templates/index/">My Blog</a>
       <a class="nav-brand" href="/posts">Posts</a>
       <a class="nav-brand" href="/posts/create">Write Something</a>
       <a class="nav-brand" href="/roll-dice/6">Roll Dice</a>
@@ -20,8 +20,8 @@
 </th:block>
 <!--footer-->
 <th:block th:fragment="footer">
-  <footer th:fr>
-    <div class="d-flex justify-content-between py-4 my-4 border-top change fixed-bottom" style="background-color: darkolivegreen; color: black">
+  <footer class="navbar">
+    <div class="d-flex justify-content-between align-items-center mt-auto  ">
       <p>© Created by Joshua Ramos. All rights reserved.</p>
     </div>
   </footer>
