@@ -4,12 +4,30 @@ body{
 }
 .navbar{
     background-color: darkolivegreen;
-}.navbar a:link{
-    color: black;
 }
+
+.navbar{
+    color: black;
+    font-family: 'Rampart One', cursive;
+}
+
 footer{
     position: fixed;
     bottom: 0;
     width: 100%;
+    padding: 20px;
+    background-color: darkolivegreen;
+    font-family: 'Rampart One', cursive;
 }
 
+.btn{
+    background-color: darkolivegreen;
+}
+
+a{
+    color: black;
+}
+
+a:hover{
+    color: tan;
+}

@@ -15,10 +15,10 @@ public class User {
     @Column(nullable = false, length = 50)
     private String username;
 
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false)
     private String email;
 
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false)
     private String password;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
@@ -27,12 +27,17 @@ public class User {
     public User(){
 
     }
+    public User(long id, String username){
+        this.id = id;
+        this.username = username;
+    }
 
-    public User(long id, String username, String email, String password) {
+    public User(long id, String username, String email, String password, List<Post> posts) {
         this.id = id;
         this.username = username;
         this.email = email;
         this. password = password;
+        this.posts = posts;
     }
     public List<Post> getPosts(){
         return posts;
