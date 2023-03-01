@@ -1,7 +1,6 @@
 package com.codeup.codeupspringblog.models;
 
 import jakarta.persistence.*;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 
@@ -24,9 +23,16 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<Post> posts;
 
-    public User(){
-
+    public User() {
     }
+
+    public User(User copy) {
+        id = copy.id; // This line is SUPER important! Many things won't work if it's absent
+        email = copy.email;
+        username = copy.username;
+        password = copy.password;
+    }
+
     public User(long id, String username){
         this.id = id;
         this.username = username;
@@ -39,13 +45,7 @@ public class User {
         this. password = password;
         this.posts = posts;
     }
-    public List<Post> getPosts(){
-        return posts;
-    }
 
-    public void setPosts(List<Post> posts) {
-        this.posts = posts;
-    }
 
     public long getId() {
         return id;
@@ -77,5 +77,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<Post> getPosts(){
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
     }
 }
