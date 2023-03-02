@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class UserController {
-    private UserRepository userDao;
-    private PasswordEncoder passwordEncoder;
+    private final UserRepository userDao;
+    private final PasswordEncoder passwordEncoder;
 
     public UserController(UserRepository userDao, PasswordEncoder passwordEncoder) {
         this.userDao = userDao;
@@ -31,5 +31,11 @@ public class UserController {
         user.setPassword(hash);
         userDao.save(user);
         return "redirect:/login";
+    }
+
+
+    @GetMapping("/profile")
+    public String showProfile(){
+        return "users/profile";
     }
 }

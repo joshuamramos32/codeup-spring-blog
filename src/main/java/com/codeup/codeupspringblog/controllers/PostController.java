@@ -1,5 +1,6 @@
 package com.codeup.codeupspringblog.controllers;
 
+import ch.qos.logback.core.joran.conditional.IfAction;
 import com.codeup.codeupspringblog.models.Post;
 import com.codeup.codeupspringblog.models.User;
 import com.codeup.codeupspringblog.repositories.PostRepository;
@@ -9,6 +10,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 public class PostController {
@@ -25,17 +28,24 @@ public class PostController {
 
     @GetMapping("/posts")
     public String posts(Model model){
-       model.addAttribute("posts",postDao.findAll());
+        List<Post> posts = postDao.findAll();
+       model.addAttribute("posts",posts);
         return "posts/index";
     }
 
     @GetMapping("/posts/{id}")
-    public String postsHome(@PathVariable long id, Model model){
-        Post post = postDao.getReferenceById(id);
+    public String postsHome(@PathVariable long id, Model model) {
+        Post post = postDao.findById(id);
         User user = post.getUser();
-        model.addAttribute("post", post);
-        model.addAttribute("userEmail", user.getEmail());
-        return "posts/show";
+        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (user.getId() == loggedInUser.getId()) {
+            model.addAttribute("post", post);
+            model.addAttribute("userEmail", user.getEmail());
+            return "posts/show";
+        } else {
+
+            return "redirect:/posts";
+        }
     }
 
     @GetMapping("/posts/create")
@@ -45,29 +55,32 @@ public class PostController {
     }
 
     @PostMapping("/posts/save")
-    public String savePost(@ModelAttribute Post post){
+    public String savePost(@ModelAttribute Post post) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Post origPost = postDao.findById(post.getId());
-        if (user.getId() == origPost.getUser().getId()) {
-            post.setUser(user);
-            postDao.save(post);
-            emailService.preparedAndSendPost(post);
+        Post origPost = postDao.findById(post.getId()); {
+                if (origPost == null || user.getId() == origPost.getUser().getId()) {
+                    post.setUser(user);
+                    postDao.save(post);
+                    emailService.preparedAndSendPost(post);
+            }
+            return "redirect:/posts";
         }
-        post.setUser(user);
-        postDao.save(post);
-        emailService.preparedAndSendPost(post);
-        return "redirect:/posts";
     }
 
-    @GetMapping("/posts/{id}/edit")
-    public String editPostForm(Model model, @PathVariable long id) {
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Post post = postDao.findById(id);
-        if (user.getId() == post.getUser().getId()) {
-            model.addAttribute("post", post);
-            return "posts/create";
+        @GetMapping("/posts/{id}/edit")
+        public String editPostForm (Model model,@PathVariable long id){
+            User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            Post post = postDao.findById(id);
+            if (user.getId() == post.getUser().getId()) {
+                model.addAttribute("post", post);
+                return "posts/create";
+            }else{
+
+            return "redirect:/posts";
         }
-        return "redirect:/posts";
     }
+
+
+
 }
 
